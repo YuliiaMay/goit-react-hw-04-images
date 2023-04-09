@@ -11,7 +11,7 @@ function Modal({ query, bigImgUrl, onClose }) {
 
     useEffect(() => {
         window.addEventListener('keydown', handleKeyDown);
-    }, [bigImgUrl])
+    }, [])
 
     useEffect(() => {
         return () => { window.removeEventListener('keydown', handleKeyDown); };

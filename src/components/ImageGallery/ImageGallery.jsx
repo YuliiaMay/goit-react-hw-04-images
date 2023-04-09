@@ -81,7 +81,7 @@ const ImageGallery = ({ query }) => {
 
         getImages();
         
-    }, [query, page, showModal])
+    }, [query, page])
     
 
 

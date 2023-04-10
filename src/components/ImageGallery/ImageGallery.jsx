@@ -41,10 +41,6 @@ const ImageGallery = ({ query }) => {
 
 
     useEffect(() => {
-        reset();
-    }, [query])
-
-    useEffect(() => {
         if (!query) return;
 
         setStatus(Status.PENDING);
@@ -57,23 +53,22 @@ const ImageGallery = ({ query }) => {
 
                 setTotal(total);
 
-                if (newImg.length > 0) {
-                    setStatus(Status.RESOLVED);
-                    setGallery(prevGallery => [...prevGallery, ...newImg]);
-                    
-
-                    if (page === 1 && showModal === false) {
-                        showSuccesMessage(total);
-                    }
-
-                    if (page > 1) {
-                        scrollPageDown();
-                    }
-                    return;
+                if (!newImg.length) {
+                    showErrorMessage(query);
+                    setStatus(Status.REJECTED);
+                }
+                
+                setGallery(prevGallery => [...prevGallery, ...newImg]);
+                setStatus(Status.RESOLVED);
+                
+                if (page === 1) {
+                    showSuccesMessage(total);
                 }
 
-                showErrorMessage(query);
-                setStatus(Status.REJECTED)
+                if (page > 1) {
+                    scrollPageDown();
+                }
+
             } catch (error) {
                 setStatus(Status.REJECTED)
             }
@@ -81,7 +76,13 @@ const ImageGallery = ({ query }) => {
 
         getImages();
         
-    }, [query, page, showModal])
+    }, [query, page])
+
+
+    useEffect(() => {
+        if (!query) return;
+        setGallery([]);
+    }, [query])
     
 
 
@@ -125,10 +126,9 @@ const ImageGallery = ({ query }) => {
         });
     }     
 
-    const reset = () => {
-        setGallery([]);
-        setPage(1);
-    }
+    // const reset = () => {
+    //     setGallery([]);
+    // }
 
     if (status === Status.IDLE) {
         return (<DeafaultScreen />);

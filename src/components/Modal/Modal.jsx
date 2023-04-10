@@ -9,14 +9,6 @@ function Modal({ query, bigImgUrl, onClose }) {
         }
     };
 
-    // useEffect(() => {
-    //     window.addEventListener('keydown', handleKeyDown);
-    // }, [bigImgUrl, handleKeyDown])
-
-    // useEffect(() => {
-    //     return () => { window.removeEventListener('keydown', handleKeyDown); };
-    // }, [handleKeyDown])
-
     useEffect(() => {
         window.addEventListener('keydown', handleKeyDown);
 

@@ -7,11 +7,10 @@ import Searchbar from "./Searchbar/Searchbar";
 
 export const App = () => {
   const [query, setQuery] = useState('');
-  const [page, setPage] = useState(1);
+  // const [page, setPage] = useState(1);
 
   const handelSubmit = (query) => {
     setQuery(query);
-    setPage(1);
   }
 
   return (
@@ -25,7 +24,7 @@ export const App = () => {
     >
       
       <Searchbar onSubmit={handelSubmit} />
-      <ImageGallery query={query} page={page} />
+      <ImageGallery query={query} />
       
       <ToastContainer />
     </div>

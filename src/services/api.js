@@ -11,16 +11,16 @@ export async function fetchImages(query, page) {
             params: {
                 key: API_KEY,
                 q: query,
-                page,
+                page: page,
                 image_type: 'photo',
                 orientation: 'horizontal',
-                per_page: 12,
+                per_page: 3,
             },
         });
 
 
         if (response.status === 200) {
-            return response;
+            return response.data;
         }
 
         return Promise.reject(

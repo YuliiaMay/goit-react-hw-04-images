@@ -39,17 +39,27 @@ const ImageGallery = ({ query }) => {
         });
     }, []);
 
+    useEffect(() => {
+            setGallery([]);
+            setPage(1);
+    }, [query])
+
 
     useEffect(() => {
         if (!query) return;
+
+        console.log(gallery);
+        console.log(page);
 
         setStatus(Status.PENDING);
 
         async function getImages() {
             try {
                 const GalleryData = await fetchImages(query, page);
-                const newImg = GalleryData.data.hits;
-                const total = GalleryData.data.totalHits;
+                const newImg = GalleryData.hits;
+                const total = GalleryData.totalHits;
+
+                console.log(newImg);
 
                 setTotal(total);
 
@@ -76,14 +86,7 @@ const ImageGallery = ({ query }) => {
 
         getImages();
         
-    }, [query, page])
-
-
-    useEffect(() => {
-        if (!query) return;
-        setGallery([]);
-    }, [query])
-    
+    }, [query, page, setGallery])
 
 
     const toggleModal = () => {

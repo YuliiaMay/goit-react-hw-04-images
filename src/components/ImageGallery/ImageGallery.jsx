@@ -40,8 +40,8 @@ const ImageGallery = ({ query }) => {
     }, []);
 
     useEffect(() => {
-            setGallery([]);
-            setPage(1);
+        setGallery([]);
+        setPage(1);
     }, [query])
 
 
@@ -86,7 +86,7 @@ const ImageGallery = ({ query }) => {
 
         getImages();
         
-    }, [query, page, setGallery])
+    }, [query, page])
 
 
     const toggleModal = () => {

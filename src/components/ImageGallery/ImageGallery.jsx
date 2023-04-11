@@ -18,14 +18,12 @@ const Status = {
     REJECTED: 'rejected'
 }
 
-const ImageGallery = ({ query }) => {
+const ImageGallery = ({ query, page, onLoadMore }) => {
     const [gallery, setGallery] = useState([]);
     const [status, setStatus] = useState(Status.IDLE);
-    const [page, setPage] = useState(1);
     const [showModal, setShowModal] = useState(false);
     const [bigImgUrl, setBidImgUrl] = useState(null);
     const [total, setTotal] = useState(null);
-    
 
 
     useEffect(() => {
@@ -33,23 +31,19 @@ const ImageGallery = ({ query }) => {
             if (target.nodeName !== 'IMG') {
                 setShowModal(false);
                 return;
+            } else {
+                setShowModal(true);
             }
-
-            setShowModal(true);
         });
     }, []);
 
     useEffect(() => {
         setGallery([]);
-        setPage(1);
     }, [query])
 
 
     useEffect(() => {
         if (!query) return;
-
-        console.log(gallery);
-        console.log(page);
 
         setStatus(Status.PENDING);
 
@@ -58,8 +52,6 @@ const ImageGallery = ({ query }) => {
                 const GalleryData = await fetchImages(query, page);
                 const newImg = GalleryData.hits;
                 const total = GalleryData.totalHits;
-
-                console.log(newImg);
 
                 setTotal(total);
 
@@ -88,7 +80,6 @@ const ImageGallery = ({ query }) => {
         
     }, [query, page])
 
-
     const toggleModal = () => {
         setShowModal(!showModal);
     };
@@ -98,10 +89,6 @@ const ImageGallery = ({ query }) => {
         setShowModal(true);
     }
 
-
-    const handleLoadMore = () => {
-        setPage(prevPage => prevPage + 1);
-    }
     
     const showSuccesMessage = (total) => {
         return toast.success(`Total images in this gallery: ${total}`, {
@@ -128,10 +115,6 @@ const ImageGallery = ({ query }) => {
             theme: "light",
         });
     }     
-
-    // const reset = () => {
-    //     setGallery([]);
-    // }
 
     if (status === Status.IDLE) {
         return (<DeafaultScreen />);
@@ -169,7 +152,7 @@ const ImageGallery = ({ query }) => {
 
                 {
                     gallery.length > 0 && gallery.length !== total && (
-                        <LoadMoreButton onLoadMore={handleLoadMore} />
+                        <LoadMoreButton onLoadMore={onLoadMore} />
                     )
                 }
                 

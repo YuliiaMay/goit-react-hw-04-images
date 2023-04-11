@@ -14,7 +14,7 @@ export async function fetchImages(query, page) {
                 page: page,
                 image_type: 'photo',
                 orientation: 'horizontal',
-                per_page: 3,
+                per_page: 12,
             },
         });
 
